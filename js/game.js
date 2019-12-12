@@ -36,7 +36,7 @@ const Game = {
       //   Game.moveAll();
 
       window.requestAnimationFrame(refresh);
-      //console.log(fps)
+      //console.log(fps);
     }
     //recordar borrar los obstaculos
     window.requestAnimationFrame(refresh);
@@ -44,20 +44,20 @@ const Game = {
 
   reset: function() {
     this.background = new Background(this.ctx, this.width, this.height);
-    // this.player = new Player(this.ctx, 4.98, 3.51);
+    // this.block = new Block(this.ctx, 1, 1);
   },
 
   clear: function() {
-    // this.ctx.clearRect(0, 0, this.width, this.height);
+    this.ctx.clearRect(0, 0, this.width, this.height);
   },
 
   drawAll: function() {
     this.background.draw();
-    this.player.draw(/*this.framesCounter*/);
+    // this.block.draw(/*this.framesCounter*/);
   },
 
   moveAll: function() {
     // this.background.move();
-    // this.player.newPos();
+    // this.block.newPos();
   }
 };

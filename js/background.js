@@ -12,7 +12,6 @@ class Background {
   }
 
   draw() {
-    console.log("hola");
     this.ctx.drawImage(
       this.image,
       this.posX,
