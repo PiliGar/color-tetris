@@ -1,4 +1,41 @@
 /* Styles */
+@import url("https://fonts.googleapis.com/css?family=Luckiest+Guy&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Luckiest+Guy|Poiret+One&display=swap");
+
 body {
   background: cadetblue;
+}
+html {
+  font: 400 normal 10px/1.45rem "Luckiest Guy", sans-serif, Arial, Helvetica,
+    sans-serif;
+}
+#tetris-board {
+  border: 0.1rem solid #ffffff;
+}
+.header,
+.wrapper {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+}
+.title {
+  font-size: 5rem;
+  letter-spacing: 0.3rem;
+  color: #ffffff;
+  margin-bottom: 1rem;
+}
+.btn {
+  padding: 1.5rem;
+  border: solid 0.1rem #ffffff;
+  border-radius: 1rem;
+  background: #ffffff;
+  color: cadetblue;
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+.btn:hover {
+  transition: 0.5s ease all;
+  background: cadetblue;
+  color: #ffffff;
 }
