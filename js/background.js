@@ -8,7 +8,6 @@ class Background {
     this.height = 750;
     this.posX = 0;
     this.posY = 0;
-    // this.vx = 4.5;
   }
 
   draw() {
@@ -21,10 +20,5 @@ class Background {
     );
   }
 
-  move() {
-    // this.posX -= this.vx;
-    // if (this.posX <= -this.width) {
-    //   this.posX = 0;
-    // }
-  }
+  move() {}
 }
