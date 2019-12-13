@@ -2,17 +2,27 @@
 const Game = {
   canvas: undefined,
   ctx: undefined,
-  fps: 60, //cambiar request animation frame
   width: undefined,
   height: undefined,
   framesCounter: 0,
+
+  row: 20,
+  col: 10,
+  squareSize: 50,
+  emptySpace: "white",
+
+  initPosX: 200,
+  initPosY: 0,
+
   playerKeys: {
-    TOP_KEY: 38,
-    BUTTON_KEY: 40,
     LEFT_KEY: 37,
-    RIGHT_KEY: 39
+    TOP_KEY: 38,
+    RIGHT_KEY: 39,
+    BUTTON_KEY: 40
   },
+
   score: 0,
+  fps: 60,
 
   init: function() {
     this.canvas = document.getElementById("tetris-board");
@@ -33,18 +43,22 @@ const Game = {
 
       Game.clear();
       Game.drawAll();
-      //   Game.moveAll();
+      Game.moveAll();
 
       window.requestAnimationFrame(refresh);
       //console.log(fps);
     }
-    //recordar borrar los obstaculos
     window.requestAnimationFrame(refresh);
   },
 
   reset: function() {
     this.background = new Background(this.ctx, this.width, this.height);
-    // this.block = new Block(this.ctx, 1, 1);
+    this.block = new Block(
+      this.ctx,
+      this.squareSize,
+      this.initPosX,
+      this.initPosY
+    );
   },
 
   clear: function() {
@@ -53,11 +67,8 @@ const Game = {
 
   drawAll: function() {
     this.background.draw();
-    // this.block.draw(/*this.framesCounter*/);
+    this.block.draw(200, 0, "#5f9ea0");
   },
 
-  moveAll: function() {
-    // this.background.move();
-    // this.block.newPos();
-  }
+  moveAll: function() {}
 };
