@@ -5,9 +5,6 @@ const Game = {
   width: undefined,
   height: undefined,
   framesCounter: 0,
-
-  row: 20,
-  col: 10,
   squareSize: 50,
   emptySpace: "white",
 
@@ -46,7 +43,7 @@ const Game = {
       Game.moveAll();
 
       window.requestAnimationFrame(refresh);
-      //console.log(fps);
+      console.log(fps);
     }
     window.requestAnimationFrame(refresh);
   },
