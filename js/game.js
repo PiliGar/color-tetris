@@ -43,7 +43,7 @@ const Game = {
       Game.moveAll();
 
       window.requestAnimationFrame(refresh);
-      console.log(fps);
+      //console.log(fps);
     }
     window.requestAnimationFrame(refresh);
   },
