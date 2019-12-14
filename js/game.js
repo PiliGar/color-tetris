@@ -5,9 +5,6 @@ const Game = {
   width: undefined,
   height: undefined,
   framesCounter: 0,
-
-  row: 20,
-  col: 10,
   squareSize: 50,
   emptySpace: "white",
 

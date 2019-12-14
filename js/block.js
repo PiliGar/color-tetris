@@ -26,7 +26,9 @@ class Block {
     this.ctx.strokeRect(this.posX, this.posY, this.squareSize, this.squareSize);
   }
 
-  move() {}
+  moveDown() {
+    this.posY = this.posY + 50;
+  }
   newPos() {}
   update() {}
 
@@ -34,6 +36,7 @@ class Block {
     document.addEventListener("keydown", e => {
       if (e.keyCode === 37) {
         console.log("LEFT pressed move left");
+        this.moveDown();
       } else if (e.keyCode === 38) {
         console.log("TOP pressed rotate");
       } else if (e.keyCode === 39) {
