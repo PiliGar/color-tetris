@@ -6,10 +6,46 @@ const Game = {
   height: undefined,
   framesCounter: 0,
   squareSize: 50,
-  emptySpace: "white",
 
-  initPosX: 200,
-  initPosY: 0,
+  colX: [0, 50, 100, 150, 200, 250, 300, 350, 400, 450, 500],
+  rowY: [
+    0,
+    50,
+    100,
+    150,
+    200,
+    250,
+    300,
+    350,
+    400,
+    450,
+    500,
+    550,
+    600,
+    650,
+    700,
+    750
+  ],
+
+  board: [
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null]
+  ],
 
   playerKeys: {
     LEFT_KEY: 37,
@@ -36,26 +72,22 @@ const Game = {
     function refresh(timestamp) {
       delta = timestamp - past;
       past = timestamp;
-      let fps = 1000 / delta;
+      this.framesCounter++;
+      // let fps = 1000 / delta;
+      this.clear();
+      this.drawAll();
 
-      Game.clear();
-      Game.drawAll();
-      Game.moveAll();
-
-      window.requestAnimationFrame(refresh);
+      if (this.framesCounter % 20 === 0) this.moveAll();
+      if (this.framesCounter > 1000) this.framesCounter = 0;
+      window.requestAnimationFrame(refresh.bind(this));
       //console.log(fps);
     }
-    window.requestAnimationFrame(refresh);
+    window.requestAnimationFrame(refresh.bind(this));
   },
 
   reset: function() {
     this.background = new Background(this.ctx, this.width, this.height);
-    this.block = new Block(
-      this.ctx,
-      this.squareSize,
-      this.initPosX,
-      this.initPosY
-    );
+    this.drawNewBlock();
   },
 
   clear: function() {
@@ -64,8 +96,28 @@ const Game = {
 
   drawAll: function() {
     this.background.draw();
-    this.block.draw(200, 0, "#5f9ea0");
+    this.block.draw();
   },
 
-  moveAll: function() {}
+  drawNewBlock: function() {
+    const initX = this.colX[Math.floor(Math.random() * this.colX.length)];
+    const initY = 0;
+    this.block = new Block(this.ctx, this.squareSize, initX, initY, this.board);
+  },
+
+  moveAll: function() {
+    //this.block.setListeners();
+    if (this.block.y < 700) {
+      this.block.moveDown();
+      // this.grid[this.gridX][this.initY] = 1;
+      // console.log(this.grid);
+      // this.y = 700;
+    } else {
+      const gridX = this.colX.indexOf(this.block.x);
+      const gridY = this.rowY.indexOf(this.block.y);
+
+      this.board[gridY][gridX] = this.block;
+      console.log(this.board);
+    }
+  }
 };
