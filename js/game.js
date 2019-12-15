@@ -7,7 +7,7 @@ const Game = {
   framesCounter: 0,
   squareSize: 50,
 
-  colX: [0, 50, 100, 150, 200, 250, 300, 350, 400, 450, 500],
+  colX: [0, 50, 100, 150, 200, 250, 300, 350, 400, 450],
   rowY: [
     0,
     50,
@@ -77,7 +77,7 @@ const Game = {
       this.clear();
       this.drawAll();
 
-      if (this.framesCounter % 20 === 0) this.moveAll();
+      if (this.framesCounter % 10 === 0) this.moveAll();
       if (this.framesCounter > 1000) this.framesCounter = 0;
       window.requestAnimationFrame(refresh.bind(this));
       //console.log(fps);
@@ -97,6 +97,7 @@ const Game = {
   drawAll: function() {
     this.background.draw();
     this.block.draw();
+    this.drawAllBlocks();
   },
 
   drawNewBlock: function() {
@@ -105,19 +106,33 @@ const Game = {
     this.block = new Block(this.ctx, this.squareSize, initX, initY, this.board);
   },
 
-  moveAll: function() {
-    //this.block.setListeners();
-    if (this.block.y < 700) {
-      this.block.moveDown();
-      // this.grid[this.gridX][this.initY] = 1;
-      // console.log(this.grid);
-      // this.y = 700;
-    } else {
-      const gridX = this.colX.indexOf(this.block.x);
-      const gridY = this.rowY.indexOf(this.block.y);
+  drawAllBlocks: function() {
+    for (let i = 0; i < this.board.length; i++) {
+      for (let j = 0; j < this.board[i].length; j++) {
+        if (this.board[i][j] != null) {
+          this.board[i][j].draw();
+        }
+      }
+    }
+  },
 
+  checkIfEmpty() {
+    if (this.board[i][j] === null) {
+      return true;
+    }
+  },
+
+  moveAll: function() {
+    const gridX = this.colX.indexOf(this.block.x);
+    const gridY = this.rowY.indexOf(this.block.y);
+    if (this.block.y < 700 && this.board[gridY + 1][gridX] === null) {
+      this.block.moveDown();
+    } else {
       this.board[gridY][gridX] = this.block;
       console.log(this.board);
+      this.drawNewBlock();
+
+      // this.ctx.save();
     }
   }
 };

@@ -23,10 +23,12 @@ class Block {
   }
 
   draw() {
+    this.ctx.save();
     this.ctx.fillStyle = this.color;
     this.ctx.fillRect(this.x, this.y, this.squareSize, this.squareSize);
     this.ctx.strokeStyle = this.color;
     this.ctx.strokeRect(this.x, this.y, this.squareSize, this.squareSize);
+    this.ctx.restore();
   }
 
   moveDown() {
