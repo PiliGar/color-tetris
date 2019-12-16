@@ -1,8 +1,9 @@
 /*jshint esversion: 6 */
 class Block {
-  constructor(ctx, squareSize, initX, initY, grid) {
+  constructor(ctx, squareSize, initX, initY, keys, colX, rowY, grid) {
     this.ctx = ctx;
     this.squareSize = squareSize;
+    this.type = true;
 
     this.blockColors = [
       "MediumSlateBlue",
@@ -14,9 +15,14 @@ class Block {
     this.color = this.blockColors[
       Math.floor(Math.random() * this.blockColors.length)
     ];
+    //this.color = "Tomato";
 
     this.x = initX;
     this.y = initY;
+    this.col = colX;
+    this.row = rowY;
+    this.gX = this.col.indexOf(this.x);
+    this.gY = this.row.indexOf(this.y);
     this.grid = grid;
 
     this.setListeners();
@@ -31,25 +37,37 @@ class Block {
     this.ctx.restore();
   }
 
-  moveDown() {
+  fallDown() {
     this.y += 50;
+    console.log(this);
   }
-
-  newPos() {}
-  update() {}
+  moveLeft() {
+    if (
+      this.x > 0 &&
+      this.grid[this.gY][this.gX - 1] === null &&
+      this.type === true
+    ) {
+      this.x -= 50;
+    }
+  }
+  moveRight() {
+    if (
+      this.x < 450 &&
+      this.grid[this.gY][this.gX + 1] === null &&
+      this.type === true
+    ) {
+      this.x += 50;
+    }
+  }
 
   setListeners() {
     document.addEventListener("keydown", e => {
       if (e.keyCode === 37) {
-        console.log("LEFT pressed move left");
         this.moveLeft();
-      } else if (e.keyCode === 38) {
-        console.log("TOP pressed rotate");
       } else if (e.keyCode === 39) {
-        console.log("RIGTH pressed move right");
+        this.moveRight();
       } else if (e.keyCode === 40) {
-        console.log("DOWN pressed move down");
-        this.moveDown();
+        // this.moveDown();
       }
     });
     console.log("setListener");
