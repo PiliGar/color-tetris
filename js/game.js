@@ -48,7 +48,6 @@ const Game = {
 
   playerKeys: {
     LEFT_KEY: 37,
-    TOP_KEY: 38,
     RIGHT_KEY: 39,
     BUTTON_KEY: 40
   },
@@ -76,10 +75,10 @@ const Game = {
       this.clear();
       this.drawAll();
 
-      if (this.framesCounter % 20 === 0) this.moveAll();
-      // if (this.isCollision()) this.gameOver();
+      if (this.framesCounter % 10 === 0) this.moveAll();
+      if (this.isTopCollision()) this.gameOver();
       console.log("* * *");
-      //this.checkIfLineCollision();
+      this.checkIfLineCollision();
 
       if (this.framesCounter > 1000) this.framesCounter = 0;
       window.requestAnimationFrame(refresh.bind(this));
@@ -104,8 +103,8 @@ const Game = {
   },
 
   drawNewBlock: function() {
-    const initX = this.colX[Math.floor(Math.random() * this.colX.length)];
-    //const initX = 50;
+    //const initX = this.colX[Math.floor(Math.random() * this.colX.length)];
+    const initX = 50;
     const initY = 0;
     this.block = new Block(
       this.ctx,
@@ -138,13 +137,66 @@ const Game = {
     } else {
       //puts the block into the grid box
       this.block.type = false;
-      console.log(this.block);
-      console.log("- - -");
+      //console.log(this.block);
+
       this.board[gridY][gridX] = this.block;
 
       console.log(this.board);
       this.drawNewBlock();
       //console.log(this);
     }
+  },
+
+  countLines: function() {
+    this.score += 100;
+    console.log(this.score);
+  },
+
+  checkIfLineCollision: function() {
+    for (let row = 0; row < this.board.length; row++) {
+      const condition = currentValue =>
+        currentValue != null && currentValue.color === currentValue.color;
+
+      if (this.board[row].every(condition)) {
+        console.log("- - -");
+        console.log(" L I N E");
+        this.countLines();
+        let lineToRemove = this.board.indexOf(this.board[row]);
+        this.board.splice(lineToRemove, 1);
+        console.log(this.board);
+        this.board.unshift([
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]);
+        console.log(this.board);
+        for (let row = 0; row < this.board.length; row++) {
+          for (let col = 0; col < this.board[row].length; col++) {
+            if (this.board[row][col] != null) {
+              this.board[row][col].y += 50;
+            }
+          }
+        }
+      }
+    }
+  },
+
+  isTopCollision: function() {
+    for (let i = 0; i < this.board[0].length; i++) {
+      if (this.board[0][i] != null) {
+        return true;
+      }
+    }
+  },
+  gameOver: function() {
+    console.log("G A M E  O V E R");
+    window.cancelAnimationFrame(refresh);
   }
 };
