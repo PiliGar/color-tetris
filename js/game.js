@@ -152,12 +152,24 @@ const Game = {
     console.log(this.score);
   },
 
+  areSameColor: function(data) {
+    const firstColor = data[0].color;
+    let sameColors = true;
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].color != firstColor) {
+        sameColors = false;
+      }
+    }
+    return sameColors;
+  },
+
   checkIfLineCollision: function() {
     for (let row = 0; row < this.board.length; row++) {
-      const condition = currentValue =>
-        currentValue != null && currentValue.color === currentValue.color;
-
-      if (this.board[row].every(condition)) {
+      const condition = currentValue => currentValue != null;
+      if (
+        this.board[row].every(condition) &&
+        this.areSameColor(this.board[row])
+      ) {
         console.log("- - -");
         console.log(" L I N E");
         this.countLines();
