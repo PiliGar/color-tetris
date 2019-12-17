@@ -5,7 +5,9 @@ window.onload = function() {
     var cover = document.getElementById("cover").style;
     cover.opacity = 1;
     (function fade() {
-      (cover.opacity -= 0.1) < 0 ? (s.display = "none") : setTimeout(fade, 20);
+      (cover.opacity -= 0.1) < 0
+        ? (cover.display = "none")
+        : setTimeout(fade, 20);
     })();
 
     setTimeout(function() {

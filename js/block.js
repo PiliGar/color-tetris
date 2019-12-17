@@ -63,6 +63,17 @@ class Block {
       this.gX = this.col.indexOf(this.x);
     }
   }
+  moveDown() {
+    if (
+      this.y < 650 &&
+      this.grid[this.gY + 1][this.gX] === null &&
+      this.type === true
+    ) {
+      console.log("algo");
+      this.y += 50;
+      this.gY = this.col.indexOf(this.y);
+    }
+  }
 
   setListeners() {
     document.addEventListener("keydown", e => {
@@ -71,7 +82,7 @@ class Block {
       } else if (e.keyCode === 39) {
         this.moveRight();
       } else if (e.keyCode === 40) {
-        // this.moveDown();
+        this.moveDown();
       }
     });
   }
