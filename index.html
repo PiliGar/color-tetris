@@ -5,15 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Color tetris</title>
+    <link rel="stylesheet" href="./css/reset.css" />
     <link rel="stylesheet" href="./css/style.css" />
   </head>
   <body>
-    <div class="header">
-      <h1 class="title">COLOR TETRIS</h1>
-      <button id="start-button" class="btn">START GAME</button>
+    <div id="cover">
+      <div class="wrapper-vertical">
+        <div>
+          <img class="logo" src="./img/logo.png" alt="logo color tetris" />
+        </div>
+        <button id="start-button" class="btn">START GAME</button>
+      </div>
     </div>
-    <div class="wrapper">
-      <canvas id="tetris-board" width="500px" height="750px"></canvas>
+    <div class="wrapper-horizontal">
+      <div class="image">
+        <!-- <button id="start-button" class="btn">START GAME</button> -->
+      </div>
+      <div class="board">
+        <canvas id="tetris-board" width="500px" height="750px"></canvas>
+      </div>
+      <div class="boxes">
+        <span class="text">LINES</span>
+        <div id="lines">0</div>
+        <span class="text">SCORE</span>
+        <div id="score">0</div>
+        <span class="text">LEVEL</span>
+        <div id="level">1</div>
+      </div>
     </div>
     <script src="./js/block.js"></script>
     <script src="./js/background.js"></script>
