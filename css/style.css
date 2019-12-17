@@ -1,41 +1,103 @@
 /* Styles */
-@import url("https://fonts.googleapis.com/css?family=Luckiest+Guy&display=swap");
-@import url("https://fonts.googleapis.com/css?family=Luckiest+Guy|Poiret+One&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Montserrat:500,700&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Oswald:500,700&display=swap");
 
 body {
   background: #151519;
 }
 html {
-  font: 400 normal 10px/1.45rem "Luckiest Guy", sans-serif, Arial, Helvetica,
-    sans-serif;
+  font: 400 normal 10px/1.45rem "Montserrat", Arial, Helvetica, sans-serif;
 }
 #tetris-board {
   border: 0.1rem solid #ffffff;
 }
-.header,
-.wrapper {
+#cover {
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background-color: #151519;
+  position: absolute;
+  z-index: 2;
+}
+
+.logo {
+  margin-top: 10rem;
+}
+.wrapper-vertical {
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
   align-items: center;
 }
-.title {
-  font-size: 5rem;
-  letter-spacing: 0.3rem;
-  color: #ffffff;
-  margin-bottom: 1rem;
+.wrapper-horizontal {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
 }
-.btn {
-  padding: 1.5rem;
+.image,
+.board,
+.boxes {
+  width: 33.3%;
+  text-align: center;
+}
+.boxes {
+  text-align: left;
+  box-sizing: border-box;
+  padding: 2rem;
+}
+.board {
+  padding-top: 4rem;
+}
+.text {
+  font-family: "Oswald", Arial, Helvetica, sans-serif;
+  font-size: 2rem;
+  color: #ffffff;
+  display: block;
+  margin-bottom: 2rem;
+}
+.boxes div {
+  width: 50%;
+  height: 3rem;
+  line-height: 3rem;
+  padding: 1rem;
+  margin-bottom: 2rem;
   border: solid 0.1rem #ffffff;
+}
+
+.btn {
+  font-weight: 700;
+  padding: 2.5rem;
+  border: 0;
   border-radius: 1rem;
   background: #ffffff;
-  color: cadetblue;
-  font-size: 1.8rem;
-  margin-bottom: 1rem;
+  color: #151519;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  animation: 1000ms colorchange infinite alternate;
+  cursor: pointer;
 }
 .btn:hover {
   transition: 0.5s ease all;
-  background: cadetblue;
+  background: #151519;
   color: #ffffff;
+}
+
+@keyframes colorchange {
+  0% {
+    background: MediumSlateBlue;
+  }
+  25% {
+    background: HotPink;
+  }
+  50% {
+    background: MediumSeaGreen;
+  }
+  75% {
+    background: DeepSkyBlue;
+  }
+  100% {
+    background: Tomato;
+  }
 }

@@ -55,6 +55,8 @@ const Game = {
   score: 0,
   fps: 60,
 
+  // RENDER
+
   init: function() {
     this.canvas = document.getElementById("tetris-board");
     this.ctx = this.canvas.getContext("2d");
@@ -78,7 +80,7 @@ const Game = {
       if (this.framesCounter % 10 === 0) this.moveAll();
       if (this.isTopCollision()) this.gameOver();
       console.log("* * *");
-      if (this.checkIfLineCollision()) {
+      if (this.isLineCollision()) {
         console.log("checking");
       }
 
@@ -92,18 +94,17 @@ const Game = {
   },
 
   reset: function() {
-    // * * * reset the canvas
     this.background = new Background(this.ctx, this.width, this.height);
     this.drawNewBlock();
   },
 
   clear: function() {
-    // * * * clean the canvas
     this.ctx.clearRect(0, 0, this.width, this.height);
   },
 
+  // DRAW
+
   drawAll: function() {
-    // * * * draw all elements
     this.background.draw();
     this.drawAllBlocks();
     this.block.draw();
@@ -137,8 +138,9 @@ const Game = {
     }
   },
 
+  // MOVE
+
   moveAll: function() {
-    // * * * concatenates all animations
     const gridX = this.colX.indexOf(this.block.x);
     const gridY = this.rowY.indexOf(this.block.y);
     if (this.block.y < 700 && this.board[gridY + 1][gridX] === null) {
@@ -146,18 +148,37 @@ const Game = {
     } else {
       this.block.type = false;
       this.board[gridY][gridX] = this.block; // * saves the new block into the grid box
-      this.drawNewBlock(); // * draw new block
+      this.drawNewBlock();
     }
   },
 
-  countLines: function() {
-    // * * * score counter
-    this.score += 100;
-    console.log(this.score);
+  // COLLISIONS
+
+  isTopCollision: function() {
+    for (let i = 0; i < this.board[0].length; i++) {
+      if (this.board[0][i] != null) {
+        return true;
+      }
+    }
+  },
+
+  isLineCollision: function() {
+    // * * * checks if line is compleate
+    for (let row = 0; row < this.board.length; row++) {
+      const gridArr = this.board;
+      const rowArr = this.board[row];
+      const areFull = e => e != null;
+      if (rowArr.every(areFull) && this.areSameColor(rowArr)) {
+        console.log("- - -  L I N E");
+        console.log(this.board.indexOf(this.board[row]));
+        this.countLines();
+        this.removecompletedLines(gridArr, rowArr);
+        this.moveAllBlockPos(gridArr);
+      }
+    }
   },
 
   areSameColor: function(data) {
-    // * * * checks if all elements of a row have the same color
     const firstColor = data[0].color;
     let sameColors = true;
     for (let i = 0; i < data.length; i++) {
@@ -169,7 +190,6 @@ const Game = {
   },
 
   removecompletedLines: function(arr, line) {
-    // * * * removes completed line and add new one
     let lineToRemove = arr.indexOf(line);
     arr.splice(lineToRemove, 1);
     arr.unshift([null, null, null, null, null, null, null, null, null, null]);
@@ -188,29 +208,20 @@ const Game = {
     }
   },
 
-  checkIfLineCollision: function() {
-    // * * * checks if line is compleate
-    for (let row = 0; row < this.board.length; row++) {
-      const gridArr = this.board;
-      const rowArr = this.board[row];
-      const areFull = e => e != null;
-      if (rowArr.every(areFull) && this.areSameColor(rowArr)) {
-        console.log("- - -  L I N E");
-        console.log(this.board.indexOf(this.board[row]));
-        this.countLines();
-        this.removecompletedLines(gridArr, rowArr);
-        this.moveAllBlockPos(gridArr);
-      }
-    }
+  // SCORE
+
+  countLines: function() {
+    // * * * score counter
+    this.score = this.score += 100;
+    console.log(this.score);
+    document.getElementById("score").innerHTML = this.score;
   },
 
-  isTopCollision: function() {
-    for (let i = 0; i < this.board[0].length; i++) {
-      if (this.board[0][i] != null) {
-        return true;
-      }
-    }
+  upDateScore: function() {
+    document.getElementById("score").innerHTML = this.score;
   },
+
+  // GAME OVER
 
   gameOver: function() {
     console.log("G A M E  O V E R");
