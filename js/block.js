@@ -7,9 +7,9 @@ class Block {
 
     this.blockColors = [
       "MediumSlateBlue",
-      "HotPink",
-      "MediumSeaGreen",
-      "DeepSkyBlue",
+      // "HotPink",
+      // "MediumSeaGreen",
+      // "DeepSkyBlue",
       "Tomato"
     ];
     this.color = this.blockColors[
@@ -39,7 +39,9 @@ class Block {
 
   fallDown() {
     this.y += 50;
-    console.log(this);
+    //console.log("Position: " + this.x + ", " + this.y);
+    this.gY = this.row.indexOf(this.y);
+    //console.log("GY: " + this.gY);
   }
   moveLeft() {
     if (
@@ -48,6 +50,7 @@ class Block {
       this.type === true
     ) {
       this.x -= 50;
+      this.gX = this.col.indexOf(this.x);
     }
   }
   moveRight() {
@@ -57,6 +60,7 @@ class Block {
       this.type === true
     ) {
       this.x += 50;
+      this.gX = this.col.indexOf(this.x);
     }
   }
 
@@ -70,6 +74,5 @@ class Block {
         // this.moveDown();
       }
     });
-    console.log("setListener");
   }
 }
