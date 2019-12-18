@@ -4,12 +4,13 @@ class Block {
     this.ctx = ctx;
     this.squareSize = squareSize;
     this.type = true;
+    this.strokeColor = "3f4044";
 
     this.blockColors = [
       "MediumSlateBlue",
-      // "HotPink",
-      // "MediumSeaGreen",
-      //"DeepSkyBlue",
+      "HotPink",
+      "MediumSeaGreen",
+      "DeepSkyBlue",
       "Tomato"
     ];
     this.color = this.blockColors[
@@ -32,7 +33,7 @@ class Block {
     this.ctx.save();
     this.ctx.fillStyle = this.color;
     this.ctx.fillRect(this.x, this.y, this.squareSize, this.squareSize);
-    this.ctx.strokeStyle = this.color;
+    this.ctx.strokeStyle = this.strokeColor;
     this.ctx.strokeRect(this.x, this.y, this.squareSize, this.squareSize);
     this.ctx.restore();
   }
@@ -43,6 +44,7 @@ class Block {
     this.gY = this.row.indexOf(this.y);
     //console.log(`GY: ${this.gY}`);;
   }
+
   moveLeft() {
     if (
       this.x > 0 &&
@@ -53,6 +55,7 @@ class Block {
       this.gX = this.col.indexOf(this.x);
     }
   }
+
   moveRight() {
     if (
       this.x < 450 &&
@@ -63,6 +66,7 @@ class Block {
       this.gX = this.col.indexOf(this.x);
     }
   }
+
   moveDown() {
     if (
       this.y < 650 &&
@@ -74,6 +78,14 @@ class Block {
     }
   }
 
+  changeColor() {
+    if (this.type === true) {
+      this.color = this.blockColors[
+        Math.floor(Math.random() * this.blockColors.length)
+      ];
+    }
+  }
+
   setListeners() {
     document.addEventListener("keydown", e => {
       if (e.keyCode === 37) {
@@ -82,6 +94,8 @@ class Block {
         this.moveRight();
       } else if (e.keyCode === 40) {
         this.moveDown();
+      } else if (e.keyCode === 32) {
+        this.changeColor();
       }
     });
   }

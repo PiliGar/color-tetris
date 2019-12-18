@@ -21,7 +21,6 @@ html {
   position: absolute;
   z-index: 2;
 }
-
 .logo {
   margin-top: 10rem;
 }
@@ -81,11 +80,14 @@ html {
   font-size: 2rem;
   margin: 2rem 0;
   cursor: pointer;
+  border: solid 0.2rem #151519;
 }
 .btn:hover {
   transition: 0.5s ease all;
   background: #151519;
   color: #ffffff;
+  box-sizing: border-box;
+  border: solid 0.2rem #ffffff;
 }
 .btn-animated {
   animation: colorchange ease 1000ms infinite alternate;

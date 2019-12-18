@@ -49,7 +49,8 @@ const Game = {
   playerKeys: {
     LEFT_KEY: 37,
     RIGHT_KEY: 39,
-    BUTTON_KEY: 40
+    BUTTON_KEY: 40,
+    SPACE: 32
   },
 
   stop: false,
