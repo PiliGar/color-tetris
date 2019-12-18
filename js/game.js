@@ -55,8 +55,7 @@ const Game = {
     SPACE: 32
   },
 
-  stop: false,
-  requestId: undefined,
+  playAnimation: true,
 
   score: 0,
   lines: 0,
@@ -64,24 +63,14 @@ const Game = {
 
   fps: 60,
 
-  // STOP
+  // // STOP
 
-  stopGame: function() {
-    this.stop = true;
-    if (this.requestId) {
-      window.cancelAnimationFrame(this.requestId);
-      this.requestId = undefined;
-    }
-  },
-
-  // resumeGame: function() {
-  //   this.stop = false;
-  //   this.requestId = window.requestAnimationFrame(this.refresh.bind(this));
-  // },
-
-  // reset: function() {
-  //   this.stopGame();
-  //   this.start();
+  // stopGame: function() {
+  //   this.playAnimation= true;
+  //   if (this.requestId) {
+  //     window.cancelAnimationFrame(this.requestId);
+  //     this.requestId = undefined;
+  //   }
   // },
 
   // INIT
@@ -95,42 +84,41 @@ const Game = {
   },
 
   reset: function() {
-    console.log("2 * reset");
-    this.stopGame();
     this.background = new Background(this.ctx, this.width, this.height);
     this.drawNewBlock();
   },
 
   start: function() {
     this.reset();
-    this.stop = false;
-    this.timeVar = new Date();
     let past = 0;
     let delta = 0;
     function refresh(timestamp) {
-      delta = timestamp - past;
-      past = timestamp;
-      this.framesCounter++;
-      fps = 1000 / delta;
-      this.clear();
-      this.drawAll();
+      if (this.playAnimation === true) {
+        delta = timestamp - past;
+        past = timestamp;
+        this.framesCounter++;
+        fps = 1000 / delta;
+        this.clear();
+        this.drawAll();
 
-      //* * * level check
-      if (this.level === 1) {
-        if (this.framesCounter % 16 === 0) this.moveAll();
-      } else if (this.level === 2) {
-        if (this.framesCounter % 8 === 0) this.moveAll();
-      } else if (this.level === 3) {
-        if (this.framesCounter % 4 === 0) this.moveAll();
+        //* * * level check
+        if (this.level === 1) {
+          if (this.framesCounter % 16 === 0) this.moveAll();
+        } else if (this.level === 2) {
+          if (this.framesCounter % 8 === 0) this.moveAll();
+        } else if (this.level === 3) {
+          if (this.framesCounter % 4 === 0) this.moveAll();
+        }
+
+        //* * * collision check
+        this.checkCollision();
+        //if (this.framesCounter > 1000) this.framesCounter = 0;
+        window.requestAnimationFrame(refresh.bind(this));
       }
-
-      //* * * collision check
-      this.checkCollision();
-
-      //if (this.framesCounter > 1000) this.framesCounter = 0;
-      this.requestId = window.requestAnimationFrame(refresh.bind(this));
     }
-    this.requestId = window.requestAnimationFrame(refresh.bind(this));
+    if (this.playAnimation === true) {
+      window.requestAnimationFrame(refresh.bind(this));
+    }
   },
 
   // RENDER
@@ -147,8 +135,8 @@ const Game = {
 
   drawNewBlock: function() {
     // * * * draw new blocks
-    const initX = this.colX[Math.floor(Math.random() * this.colX.length)];
-    //const initX = 50;
+    //const initX = this.colX[Math.floor(Math.random() * this.colX.length)];
+    const initX = 50;
     const initY = 0;
     this.block = new Block(
       this.ctx,
@@ -244,8 +232,6 @@ const Game = {
 
   moveAllBlockPos: function(arr) {
     // * * * move all block when line is completed
-
-    // if (this.block.type === false && this.Block.y < this.removedLineY) {
     for (let row = 0; row < arr.length; row++) {
       for (let col = 0; col < arr[row].length; col++) {
         if (
@@ -285,17 +271,14 @@ const Game = {
   // GAME OVER
 
   gameOver: function() {
-    this.totalTiempo = (new Date() - this.timeVar) / 1000;
+    this.playAnimation = false;
     this.ctx.fillRect(0, 0, 500, 750);
     this.ctx.fillStyle = "#151515";
     this.ctx.save();
     this.ctx.fillStyle = "#FFFFFF";
-    this.ctx.font = "70px Oswald";
-    this.ctx.fillText("GAME", 200, 150);
-    this.ctx.fillText("OVER", 200, 250);
+    this.ctx.font = "100px Oswald";
+    this.ctx.fillText("GAME", 140, 350);
+    this.ctx.fillText("OVER", 150, 450);
     this.ctx.restore();
-    console.log("G A M E  O V E R");
-    window.cancelAnimationFrame(this.refresh);
-    //this.stopGame();
   }
 };
