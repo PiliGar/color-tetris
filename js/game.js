@@ -53,6 +53,9 @@ const Game = {
   },
 
   score: 0,
+  lines: 0,
+  level: 1,
+
   fps: 60,
 
   // RENDER
@@ -77,7 +80,14 @@ const Game = {
       this.clear();
       this.drawAll();
 
-      if (this.framesCounter % 10 === 0) this.moveAll();
+      if (this.level === 1) {
+        if (this.framesCounter % 16 === 0) this.moveAll();
+      } else if (this.level === 2) {
+        if (this.framesCounter % 8 === 0) this.moveAll();
+      } else if (this.level === 3) {
+        if (this.framesCounter % 4 === 0) this.moveAll();
+      }
+
       if (this.isTopCollision()) this.gameOver();
       console.log("* * *");
       if (this.isLineCollision()) {
@@ -211,14 +221,24 @@ const Game = {
   // SCORE
 
   countLines: function() {
-    // * * * score counter
+    this.lines = this.lines += 1;
     this.score = this.score += 100;
-    console.log(this.score);
-    document.getElementById("score").innerHTML = this.score;
+    this.checkLevel();
+    this.upDateScore();
+  },
+
+  checkLevel: function() {
+    if (this.score >= 300) {
+      this.level = 2;
+    } else if (this.score >= 600) {
+      this.level = 3;
+    }
   },
 
   upDateScore: function() {
+    document.getElementById("lines").innerHTML = this.lines;
     document.getElementById("score").innerHTML = this.score;
+    document.getElementById("level").innerHTML = this.level;
   },
 
   // GAME OVER
