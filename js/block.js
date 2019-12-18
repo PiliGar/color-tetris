@@ -9,7 +9,7 @@ class Block {
       "MediumSlateBlue",
       // "HotPink",
       // "MediumSeaGreen",
-      // "DeepSkyBlue",
+      //"DeepSkyBlue",
       "Tomato"
     ];
     this.color = this.blockColors[
