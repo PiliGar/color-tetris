@@ -39,9 +39,9 @@ class Block {
 
   fallDown() {
     this.y += 50;
-    //console.log("Position: " + this.x + ", " + this.y);
+    //console.log(`Position: ${this.x} , ${this.y}`);
     this.gY = this.row.indexOf(this.y);
-    //console.log("GY: " + this.gY);
+    //console.log(`GY: ${this.gY}`);;
   }
   moveLeft() {
     if (
@@ -69,9 +69,8 @@ class Block {
       this.grid[this.gY + 1][this.gX] === null &&
       this.type === true
     ) {
-      console.log("algo");
       this.y += 50;
-      this.gY = this.col.indexOf(this.y);
+      this.gY = this.row.indexOf(this.y);
     }
   }
 
