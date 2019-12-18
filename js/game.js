@@ -26,6 +26,8 @@ const Game = {
     750
   ],
 
+  removedLineY: undefined,
+
   board: [
     [null, null, null, null, null, null, null, null, null, null],
     [null, null, null, null, null, null, null, null, null, null],
@@ -122,7 +124,7 @@ const Game = {
         if (this.framesCounter % 4 === 0) this.moveAll();
       }
 
-      //* * * collision chek
+      //* * * collision check
       this.checkCollision();
 
       //if (this.framesCounter > 1000) this.framesCounter = 0;
@@ -231,18 +233,26 @@ const Game = {
 
   removecompletedLines: function(arr, line) {
     let lineToRemove = arr.indexOf(line);
+    console.log("Index de la linea" + arr.indexOf(line));
+    this.removedLineY = this.rowY[lineToRemove];
+    console.log(this.removedLineY);
+
     arr.splice(lineToRemove, 1);
     arr.unshift([null, null, null, null, null, null, null, null, null, null]);
-    console.log("Guay");
+    console.log("Añado linea");
   },
 
   moveAllBlockPos: function(arr) {
     // * * * move all block when line is completed
+
+    // if (this.block.type === false && this.Block.y < this.removedLineY) {
     for (let row = 0; row < arr.length; row++) {
       for (let col = 0; col < arr[row].length; col++) {
-        if (arr[row][col] != null) {
-          console.log("Hey");
-          console.log(arr[row][col]);
+        if (
+          arr[row][col] != null &&
+          arr[row][col].type === false &&
+          arr[row][col].y < this.removedLineY
+        ) {
           arr[row][col].y += 50;
         }
       }

@@ -7,10 +7,10 @@ class Block {
     this.strokeColor = "3f4044";
 
     this.blockColors = [
-      "MediumSlateBlue",
-      "HotPink",
+      // "MediumSlateBlue",
+      // "HotPink",
       "MediumSeaGreen",
-      "DeepSkyBlue",
+      // "DeepSkyBlue",
       "Tomato"
     ];
     this.color = this.blockColors[
