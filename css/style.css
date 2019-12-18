@@ -1,6 +1,7 @@
 /* Styles */
 @import url("https://fonts.googleapis.com/css?family=Montserrat:500,700&display=swap");
 @import url("https://fonts.googleapis.com/css?family=Oswald:500,700&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap");
 
 body {
   background: #151519;
@@ -36,7 +37,7 @@ html {
   justify-content: space-between;
   align-items: center;
 }
-.image,
+.instructions,
 .board,
 .boxes {
   width: 33.3%;
@@ -67,7 +68,9 @@ html {
   margin-bottom: 2rem;
   border: solid 0.1rem #ffffff;
 }
-
+.instructions-img {
+  width: 57%;
+}
 .btn {
   font-weight: 700;
   padding: 2.5rem;
@@ -76,8 +79,7 @@ html {
   background: #ffffff;
   color: #151519;
   font-size: 2rem;
-  margin-bottom: 2rem;
-  animation: 1000ms colorchange infinite alternate;
+  margin: 2rem 0;
   cursor: pointer;
 }
 .btn:hover {
@@ -85,7 +87,14 @@ html {
   background: #151519;
   color: #ffffff;
 }
+.btn-animated {
+  animation: colorchange ease 1000ms infinite alternate;
+}
+.flash {
+  animation: flash linear 1s infinite alternate;
+}
 
+/* Btn animation */
 @keyframes colorchange {
   0% {
     background: MediumSlateBlue;
@@ -101,5 +110,18 @@ html {
   }
   100% {
     background: Tomato;
+  }
+}
+
+/* Update score animation */
+@keyframes flash {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.1;
+  }
+  100% {
+    opacity: 1;
   }
 }

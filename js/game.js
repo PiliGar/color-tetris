@@ -52,13 +52,36 @@ const Game = {
     BUTTON_KEY: 40
   },
 
+  stop: false,
+  requestId: undefined,
+
   score: 0,
   lines: 0,
   level: 1,
 
   fps: 60,
 
-  // RENDER
+  // STOP
+
+  stopGame: function() {
+    this.stop = true;
+    if (this.requestId) {
+      window.cancelAnimationFrame(this.requestId);
+      this.requestId = undefined;
+    }
+  },
+
+  // resumeGame: function() {
+  //   this.stop = false;
+  //   this.requestId = window.requestAnimationFrame(this.refresh.bind(this));
+  // },
+
+  // reset: function() {
+  //   this.stopGame();
+  //   this.start();
+  // },
+
+  // INIT
 
   init: function() {
     this.canvas = document.getElementById("tetris-board");
@@ -68,8 +91,17 @@ const Game = {
     this.start();
   },
 
+  reset: function() {
+    console.log("2 * reset");
+    this.stopGame();
+    this.background = new Background(this.ctx, this.width, this.height);
+    this.drawNewBlock();
+  },
+
   start: function() {
     this.reset();
+    this.stop = false;
+    this.timeVar = new Date();
     let past = 0;
     let delta = 0;
     function refresh(timestamp) {
@@ -80,6 +112,7 @@ const Game = {
       this.clear();
       this.drawAll();
 
+      //* * * level check
       if (this.level === 1) {
         if (this.framesCounter % 16 === 0) this.moveAll();
       } else if (this.level === 2) {
@@ -88,31 +121,20 @@ const Game = {
         if (this.framesCounter % 4 === 0) this.moveAll();
       }
 
-      if (this.isTopCollision()) this.gameOver();
-      console.log("* * *");
-      if (this.isLineCollision()) {
-        console.log("checking");
-      }
+      //* * * collision chek
+      this.checkCollision();
 
-      if (this.framesCounter > 1000) this.framesCounter = 0;
-      window.requestAnimationFrame(refresh.bind(this));
-      // console.log(past);
-      // console.log(timestamp);
-      // console.log(fps);
+      //if (this.framesCounter > 1000) this.framesCounter = 0;
+      this.requestId = window.requestAnimationFrame(refresh.bind(this));
     }
-    window.requestAnimationFrame(refresh.bind(this));
+    this.requestId = window.requestAnimationFrame(refresh.bind(this));
   },
 
-  reset: function() {
-    this.background = new Background(this.ctx, this.width, this.height);
-    this.drawNewBlock();
-  },
+  // RENDER
 
   clear: function() {
     this.ctx.clearRect(0, 0, this.width, this.height);
   },
-
-  // DRAW
 
   drawAll: function() {
     this.background.draw();
@@ -164,7 +186,13 @@ const Game = {
 
   // COLLISIONS
 
+  checkCollision: function() {
+    this.isLineCollision();
+    if (this.isTopCollision()) this.gameOver();
+  },
+
   isTopCollision: function() {
+    //console.log(" * TOP COLL");
     for (let i = 0; i < this.board[0].length; i++) {
       if (this.board[0][i] != null) {
         return true;
@@ -173,6 +201,7 @@ const Game = {
   },
 
   isLineCollision: function() {
+    //console.log(" * LINE COLL");
     // * * * checks if line is compleate
     for (let row = 0; row < this.board.length; row++) {
       const gridArr = this.board;
@@ -212,6 +241,7 @@ const Game = {
       for (let col = 0; col < arr[row].length; col++) {
         if (arr[row][col] != null) {
           console.log("Hey");
+          console.log(arr[row][col]);
           arr[row][col].y += 50;
         }
       }
@@ -244,7 +274,17 @@ const Game = {
   // GAME OVER
 
   gameOver: function() {
+    this.totalTiempo = (new Date() - this.timeVar) / 1000;
+    this.ctx.fillRect(0, 0, 500, 750);
+    this.ctx.fillStyle = "#151515";
+    this.ctx.save();
+    this.ctx.fillStyle = "#FFFFFF";
+    this.ctx.font = "70px Oswald";
+    this.ctx.fillText("GAME", 200, 150);
+    this.ctx.fillText("OVER", 200, 250);
+    this.ctx.restore();
     console.log("G A M E  O V E R");
-    window.cancelAnimationFrame(refresh);
+    window.cancelAnimationFrame(this.refresh);
+    //this.stopGame();
   }
 };
