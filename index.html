@@ -5,12 +5,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Color tetris</title>
+    <link rel="stylesheet" href="./css/reset.css" />
     <link rel="stylesheet" href="./css/style.css" />
+  </head>
+  <body>
+    <div id="cover">
+      <div class="wrapper-vertical">
+        <div>
+          <img class="logo" src="./img/logo.png" alt="logo color tetris" />
+        </div>
+        <button id="start-button" class="btn btn-animated">START GAME</button>
+      </div>
+    </div>
+    <div class="wrapper-horizontal">
+      <div class="instructions">
+        <img
+          class="instructions-img"
+          src="./img/instructions.svg"
+          alt="instructions"
+        />
+      </div>
+      <div class="board">
+        <canvas id="tetris-board" width="500px" height="750px"></canvas>
+      </div>
+      <div class="boxes">
+        <span class="text">LEVEL</span>
+        <div id="level">1</div>
+        <span class="text">LINES</span>
+        <div id="lines">0</div>
+        <span class="text">SCORE</span>
+        <div id="score">0</div>
+        <button id="pause-btn" class="btn">PAUSE</button>
+        <!--<button id="continue-btn" class="btn btn-animated">CONTINUE</button>
+        <button id="close-btn" class="btn">EXIT</button>-->
+      </div>
+    </div>
+    <script src="./js/block.js"></script>
     <script src="./js/background.js"></script>
     <script src="./js/game.js"></script>
     <script src="./js/index.js"></script>
-  </head>
-  <body>
-    <canvas id="tetris-board"></canvas>
   </body>
 </html>
