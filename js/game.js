@@ -5,6 +5,8 @@ const Game = {
   width: undefined,
   height: undefined,
   framesCounter: 0,
+  past: 0,
+  delta: 0,
   squareSize: 50,
   colX: [0, 50, 100, 150, 200, 250, 300, 350, 400, 450],
   rowY: [
@@ -34,13 +36,11 @@ const Game = {
     [null, null, null, null, null, null, null, null, null, null],
     [null, null, null, null, null, null, null, null, null, null],
     [null, null, null, null, null, null, null, null, null, null],
-
     [null, null, null, null, null, null, null, null, null, null],
     [null, null, null, null, null, null, null, null, null, null],
     [null, null, null, null, null, null, null, null, null, null],
     [null, null, null, null, null, null, null, null, null, null],
     [null, null, null, null, null, null, null, null, null, null],
-
     [null, null, null, null, null, null, null, null, null, null],
     [null, null, null, null, null, null, null, null, null, null],
     [null, null, null, null, null, null, null, null, null, null],
@@ -56,22 +56,17 @@ const Game = {
   },
 
   playAnimation: true,
+  requestId: undefined,
 
   score: 0,
   lines: 0,
   level: 1,
 
+  pauseButton: document.getElementById("pause-btn"),
+  startButton: document.getElementById("start-btn"),
+  exitButton: document.getElementById("exit-btn"),
+
   fps: 60,
-
-  // // STOP
-
-  // stopGame: function() {
-  //   this.playAnimation= true;
-  //   if (this.requestId) {
-  //     window.cancelAnimationFrame(this.requestId);
-  //     this.requestId = undefined;
-  //   }
-  // },
 
   // INIT
 
@@ -90,34 +85,34 @@ const Game = {
 
   start: function() {
     this.reset();
-    let past = 0;
-    let delta = 0;
-    function refresh(timestamp) {
-      if (this.playAnimation === true) {
-        delta = timestamp - past;
-        past = timestamp;
-        this.framesCounter++;
-        fps = 1000 / delta;
-        this.clear();
-        this.drawAll();
+    this.past = 0;
+    this.delta = 0;
+    this.requestId = window.requestAnimationFrame(this.refresh.bind(this));
+  },
 
-        //* * * level check
-        if (this.level === 1) {
-          if (this.framesCounter % 16 === 0) this.moveAll();
-        } else if (this.level === 2) {
-          if (this.framesCounter % 8 === 0) this.moveAll();
-        } else if (this.level === 3) {
-          if (this.framesCounter % 4 === 0) this.moveAll();
-        }
+  refresh: function(timestamp) {
+    if (this.playAnimation) {
+      this.delta = timestamp - this.past;
+      this.past = timestamp;
+      this.framesCounter++;
+      fps = 1000 / this.delta;
+      this.clear();
+      this.drawAll();
+      // console.log("running");
 
-        //* * * collision check
-        this.checkCollision();
-        //if (this.framesCounter > 1000) this.framesCounter = 0;
-        window.requestAnimationFrame(refresh.bind(this));
+      //* * * level check
+      if (this.level === 1) {
+        if (this.framesCounter % 16 === 0) this.moveAll();
+      } else if (this.level === 2) {
+        if (this.framesCounter % 8 === 0) this.moveAll();
+      } else if (this.level === 3) {
+        if (this.framesCounter % 4 === 0) this.moveAll();
       }
-    }
-    if (this.playAnimation === true) {
-      window.requestAnimationFrame(refresh.bind(this));
+
+      //* * * collision check
+      this.checkCollision();
+      //if (this.framesCounter > 1000) this.framesCounter = 0;
+      this.requestId = window.requestAnimationFrame(this.refresh.bind(this));
     }
   },
 
@@ -125,6 +120,7 @@ const Game = {
 
   clear: function() {
     this.ctx.clearRect(0, 0, this.width, this.height);
+    this.ctx.fillRect(0, 0, 500, 750);
   },
 
   drawAll: function() {
@@ -183,7 +179,7 @@ const Game = {
   },
 
   isTopCollision: function() {
-    //console.log(" * TOP COLL");
+    // console.log("Top COL");
     for (let i = 0; i < this.board[0].length; i++) {
       if (this.board[0][i] != null) {
         return true;
@@ -192,15 +188,13 @@ const Game = {
   },
 
   isLineCollision: function() {
-    //console.log(" * LINE COLL");
     // * * * checks if line is compleate
     for (let row = 0; row < this.board.length; row++) {
       const gridArr = this.board;
       const rowArr = this.board[row];
       const areFull = e => e != null;
       if (rowArr.every(areFull) && this.areSameColor(rowArr)) {
-        console.log("- - -  L I N E");
-        console.log(this.board.indexOf(this.board[row]));
+        // console.log("Line COL");
         this.countLines();
         this.removecompletedLines(gridArr, rowArr);
         this.moveAllBlockPos(gridArr);
@@ -221,13 +215,12 @@ const Game = {
 
   removecompletedLines: function(arr, line) {
     let lineToRemove = arr.indexOf(line);
-    console.log("Index de la linea" + arr.indexOf(line));
+    // console.log("Index line" + arr.indexOf(line));
     this.removedLineY = this.rowY[lineToRemove];
-    console.log(this.removedLineY);
-
+    // console.log(this.removedLineY);
     arr.splice(lineToRemove, 1);
     arr.unshift([null, null, null, null, null, null, null, null, null, null]);
-    console.log("Añado linea");
+    console.log("Add line");
   },
 
   moveAllBlockPos: function(arr) {
@@ -271,7 +264,7 @@ const Game = {
   // GAME OVER
 
   gameOver: function() {
-    this.playAnimation = false;
+    this.stop();
     this.ctx.fillRect(0, 0, 500, 750);
     this.ctx.fillStyle = "#151515";
     this.ctx.save();
@@ -280,5 +273,38 @@ const Game = {
     this.ctx.fillText("GAME", 140, 350);
     this.ctx.fillText("OVER", 150, 450);
     this.ctx.restore();
+  },
+
+  // BUTTONS
+
+  handleButtons: function() {
+    this.pauseButton.classList.toggle("stop");
+    this.pauseButton.innerHTML = this.pauseButton.classList.contains("stop")
+      ? "PAUSE"
+      : "CONTINUE";
+  },
+
+  pause: function() {
+    this.handleButtons();
+    this.pauseButton.classList.add("btn-animated");
+    this.playAnimation = false;
+    console.log("PAUSE");
+  },
+
+  continue: function() {
+    this.handleButtons();
+    this.pauseButton.classList.remove("btn-animated");
+    this.playAnimation = true;
+    this.refresh();
+    console.log("PLAY");
+  },
+  stop: function() {
+    this.clear();
+    this.playAnimation = false;
+    if (this.requestId) {
+      window.cancelAnimationFrame(this.requestId);
+      this.requestId = undefined;
+      console.log("STOP");
+    }
   }
 };

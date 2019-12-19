@@ -8,8 +8,8 @@ class Block {
 
     this.blockColors = [
       "MediumSlateBlue",
-      "HotPink",
-      "MediumSeaGreen",
+      // "HotPink",
+      // "MediumSeaGreen",
       "DeepSkyBlue",
       "Tomato"
     ];
