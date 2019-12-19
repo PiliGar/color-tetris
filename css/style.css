@@ -82,6 +82,9 @@ html {
   cursor: pointer;
   border: solid 0.2rem #151519;
 }
+.btn:focus {
+  outline: 0;
+}
 .btn:hover {
   transition: 0.5s ease all;
   background: #151519;
