@@ -11,6 +11,7 @@ window.onload = function() {
   Game.exitButton.onclick = function() {
     show();
     stopGame();
+    location.reload();
   };
 
   Game.pauseButton.addEventListener("click", function() {
