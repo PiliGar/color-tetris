@@ -6,6 +6,7 @@ window.onload = function() {
   Game.startButton.onclick = function() {
     fadeOut();
     startGame();
+    backgroundMusic.play();
   };
 
   Game.exitButton.onclick = function() {
