@@ -8,9 +8,9 @@ class Block {
 
     this.blockColors = [
       "MediumSlateBlue",
-      "HotPink",
-      "MediumSeaGreen",
-      "DeepSkyBlue",
+      // "HotPink",
+      // "MediumSeaGreen",
+      //"DeepSkyBlue",
       "Tomato"
     ];
     this.color = this.blockColors[
@@ -88,14 +88,19 @@ class Block {
 
   setListeners() {
     document.addEventListener("keydown", e => {
-      if (e.keyCode === 37) {
-        this.moveLeft();
-      } else if (e.keyCode === 39) {
-        this.moveRight();
-      } else if (e.keyCode === 40) {
-        this.moveDown();
-      } else if (e.keyCode === 32) {
-        this.changeColor();
+      switch (e.keyCode) {
+        case 37:
+          this.moveLeft();
+          break;
+        case 39:
+          this.moveRight();
+          break;
+        case 40:
+          this.moveDown();
+          break;
+        case 32:
+          this.changeColor();
+          break;
       }
     });
   }

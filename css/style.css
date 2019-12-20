@@ -35,6 +35,7 @@ html {
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
+  min-height: 100vh;
 }
 .instructions,
 .board,
@@ -48,7 +49,7 @@ html {
   padding: 2rem;
 }
 .board {
-  padding-top: 4rem;
+  width: 500px;
 }
 .text {
   font-family: "Oswald", Arial, Helvetica, sans-serif;
@@ -82,6 +83,9 @@ html {
   cursor: pointer;
   border: solid 0.2rem #151519;
 }
+.btn:focus {
+  outline: 0;
+}
 .btn:hover {
   transition: 0.5s ease all;
   background: #151519;
@@ -90,7 +94,7 @@ html {
   border: solid 0.2rem #ffffff;
 }
 .btn-animated {
-  animation: colorchange ease 1000ms infinite alternate;
+  animation: colorchange ease 2000ms infinite alternate;
 }
 .flash {
   animation: flash linear 1s infinite alternate;
