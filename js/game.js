@@ -88,6 +88,7 @@ const Game = {
     this.past = 0;
     this.delta = 0;
     this.requestId = window.requestAnimationFrame(this.refresh.bind(this));
+    console.log("run");
   },
 
   refresh: function(timestamp) {
@@ -98,20 +99,27 @@ const Game = {
       fps = 1000 / this.delta;
       this.clear();
       this.drawAll();
-      // console.log("running");
+      console.log("running");
 
       //* * * level check
       if (this.level === 1) {
-        if (this.framesCounter % 16 === 0) this.moveAll();
+        if (this.framesCounter % 14 === 0) this.moveAll();
       } else if (this.level === 2) {
-        if (this.framesCounter % 8 === 0) this.moveAll();
+        if (this.framesCounter % 10 === 0) this.moveAll();
       } else if (this.level === 3) {
-        if (this.framesCounter % 4 === 0) this.moveAll();
+        if (this.framesCounter % 8 === 0) this.moveAll();
       }
 
-      //* * * collision check
+      //* * * gameover check
       this.checkCollision();
-      //if (this.framesCounter > 1000) this.framesCounter = 0;
+
+      //* * * winner check
+      if (this.score === 900) {
+        console.log("WIN");
+        this.winner();
+      }
+      //console.log(fps);
+      if (this.framesCounter > 1000) this.framesCounter = 0;
       this.requestId = window.requestAnimationFrame(this.refresh.bind(this));
     }
   },
@@ -131,8 +139,8 @@ const Game = {
 
   drawNewBlock: function() {
     // * * * draw new blocks
-    //const initX = this.colX[Math.floor(Math.random() * this.colX.length)];
-    const initX = 50;
+    const initX = this.colX[Math.floor(Math.random() * this.colX.length)];
+    //const initX = 50;
     const initY = 0;
     this.block = new Block(
       this.ctx,
@@ -175,6 +183,7 @@ const Game = {
 
   checkCollision: function() {
     this.isLineCollision();
+
     if (this.isTopCollision()) this.gameOver();
   },
 
@@ -242,29 +251,40 @@ const Game = {
 
   countLines: function() {
     this.lines = this.lines += 1;
-    this.score = this.score += 100;
-    this.checkLevel();
+    this.score = this.score += 300;
+
     this.upDateScore();
+    console.log("update score");
+    this.checkLevel();
+    console.log("check level");
+    this.upDateLevel();
+    console.log("update level");
   },
 
   checkLevel: function() {
-    if (this.score >= 300) {
+    if (this.score >= 300 && this.score < 600) {
       this.level = 2;
-    } else if (this.score >= 600) {
+      console.log("LEVEL 2");
+    } else if (this.score >= 600 && this.score < 900) {
       this.level = 3;
+      console.log("LEVEL 3");
     }
   },
 
   upDateScore: function() {
     document.getElementById("lines").innerHTML = this.lines;
     document.getElementById("score").innerHTML = this.score;
+  },
+
+  upDateLevel: function() {
     document.getElementById("level").innerHTML = this.level;
   },
 
-  // GAME OVER
+  // GAME OVER / WIN
 
   gameOver: function() {
     this.stop();
+    document.getElementById("pause-btn").style.display = "none";
     this.ctx.fillRect(0, 0, 500, 750);
     this.ctx.fillStyle = "#151515";
     this.ctx.save();
@@ -273,6 +293,26 @@ const Game = {
     this.ctx.fillText("GAME", 140, 350);
     this.ctx.fillText("OVER", 150, 450);
     this.ctx.restore();
+  },
+
+  winner: function() {
+    this.stop();
+    document.getElementById("pause-btn").style.display = "none";
+    this.flash();
+    this.ctx.fillRect(0, 0, 500, 750);
+    this.ctx.fillStyle = "#151515";
+    this.ctx.save();
+    this.ctx.fillStyle = "#FFFFFF";
+    this.ctx.font = "100px Oswald";
+    this.ctx.fillText("YOU", 154, 350);
+    this.ctx.fillText("WIN!", 150, 450);
+    this.ctx.restore();
+  },
+
+  flash: function() {
+    document.getElementById("lines").classList.add("flash");
+    document.getElementById("score").classList.add("flash");
+    document.getElementById("level").classList.add("flash");
   },
 
   // BUTTONS
