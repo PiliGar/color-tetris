@@ -139,8 +139,8 @@ const Game = {
 
   drawNewBlock: function() {
     // * * * draw new blocks
-    const initX = this.colX[Math.floor(Math.random() * this.colX.length)];
-    //const initX = 50;
+    //const initX = this.colX[Math.floor(Math.random() * this.colX.length)];
+    const initX = 50;
     const initY = 0;
     this.block = new Block(
       this.ctx,
@@ -175,6 +175,7 @@ const Game = {
     } else {
       this.block.type = false;
       this.board[gridY][gridX] = this.block; // * saves the new block into the grid box
+      blockCollisionMusic.play();
       this.drawNewBlock();
     }
   },
@@ -204,6 +205,7 @@ const Game = {
       const areFull = e => e != null;
       if (rowArr.every(areFull) && this.areSameColor(rowArr)) {
         // console.log("Line COL");
+        compleateLineMusic.play();
         this.countLines();
         this.removecompletedLines(gridArr, rowArr);
         this.moveAllBlockPos(gridArr);
@@ -284,6 +286,8 @@ const Game = {
 
   gameOver: function() {
     this.stop();
+    backgroundMusic.pause();
+    gameOverMusic.play();
     document.getElementById("pause-btn").style.display = "none";
     this.ctx.fillRect(0, 0, 500, 750);
     this.ctx.fillStyle = "#151515";
@@ -297,6 +301,8 @@ const Game = {
 
   winner: function() {
     this.stop();
+    backgroundMusic.pause();
+    winnerMusic.play();
     document.getElementById("pause-btn").style.display = "none";
     this.flash();
     this.ctx.fillRect(0, 0, 500, 750);
@@ -326,6 +332,7 @@ const Game = {
 
   pause: function() {
     this.handleButtons();
+    backgroundMusic.pause();
     this.pauseButton.classList.add("btn-animated");
     this.playAnimation = false;
     console.log("PAUSE");
@@ -333,6 +340,7 @@ const Game = {
 
   continue: function() {
     this.handleButtons();
+    backgroundMusic.play();
     this.pauseButton.classList.remove("btn-animated");
     this.playAnimation = true;
     this.refresh();
