@@ -21,3 +21,4 @@ The cubes descend from the top of the field, the user can move the pieces latera
 - 300 points: 1 level
 - Total levels: 3
 
+[Play!](https://piligar.github.io/color-tetris/)
