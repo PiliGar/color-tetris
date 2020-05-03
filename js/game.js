@@ -25,7 +25,7 @@ const Game = {
     600,
     650,
     700,
-    750
+    750,
   ],
 
   removedLineY: undefined,
@@ -45,14 +45,14 @@ const Game = {
     [null, null, null, null, null, null, null, null, null, null],
     [null, null, null, null, null, null, null, null, null, null],
     [null, null, null, null, null, null, null, null, null, null],
-    [null, null, null, null, null, null, null, null, null, null]
+    [null, null, null, null, null, null, null, null, null, null],
   ],
 
   playerKeys: {
     LEFT_KEY: 37,
     RIGHT_KEY: 39,
     BUTTON_KEY: 40,
-    SPACE: 32
+    SPACE: 32,
   },
 
   playAnimation: true,
@@ -70,7 +70,7 @@ const Game = {
 
   // INIT
 
-  init: function() {
+  init: function () {
     this.canvas = document.getElementById("tetris-board");
     this.ctx = this.canvas.getContext("2d");
     this.width = this.canvas.getAttribute("width");
@@ -78,12 +78,12 @@ const Game = {
     this.start();
   },
 
-  reset: function() {
+  reset: function () {
     this.background = new Background(this.ctx, this.width, this.height);
     this.drawNewBlock();
   },
 
-  start: function() {
+  start: function () {
     this.reset();
     this.past = 0;
     this.delta = 0;
@@ -91,7 +91,7 @@ const Game = {
     console.log("run");
   },
 
-  refresh: function(timestamp) {
+  refresh: function (timestamp) {
     if (this.playAnimation) {
       this.delta = timestamp - this.past;
       this.past = timestamp;
@@ -126,21 +126,21 @@ const Game = {
 
   // RENDER
 
-  clear: function() {
+  clear: function () {
     this.ctx.clearRect(0, 0, this.width, this.height);
     this.ctx.fillRect(0, 0, 500, 750);
   },
 
-  drawAll: function() {
+  drawAll: function () {
     this.background.draw();
     this.drawAllBlocks();
     this.block.draw();
   },
 
-  drawNewBlock: function() {
+  drawNewBlock: function () {
     // * * * draw new blocks
-    //const initX = this.colX[Math.floor(Math.random() * this.colX.length)];
-    const initX = 50;
+    const initX = this.colX[Math.floor(Math.random() * this.colX.length)];
+    //const initX = 50;
     const initY = 0;
     this.block = new Block(
       this.ctx,
@@ -154,7 +154,7 @@ const Game = {
     );
   },
 
-  drawAllBlocks: function() {
+  drawAllBlocks: function () {
     // * * * go over the rows and cols to draw every block saved
     for (let row = 0; row < this.board.length; row++) {
       for (let col = 0; col < this.board[row].length; col++) {
@@ -167,7 +167,7 @@ const Game = {
 
   // MOVE
 
-  moveAll: function() {
+  moveAll: function () {
     const gridX = this.colX.indexOf(this.block.x);
     const gridY = this.rowY.indexOf(this.block.y);
     if (this.block.y < 700 && this.board[gridY + 1][gridX] === null) {
@@ -182,13 +182,13 @@ const Game = {
 
   // COLLISIONS
 
-  checkCollision: function() {
+  checkCollision: function () {
     this.isLineCollision();
 
     if (this.isTopCollision()) this.gameOver();
   },
 
-  isTopCollision: function() {
+  isTopCollision: function () {
     // console.log("Top COL");
     for (let i = 0; i < this.board[0].length; i++) {
       if (this.board[0][i] != null) {
@@ -197,12 +197,12 @@ const Game = {
     }
   },
 
-  isLineCollision: function() {
+  isLineCollision: function () {
     // * * * checks if line is compleate
     for (let row = 0; row < this.board.length; row++) {
       const gridArr = this.board;
       const rowArr = this.board[row];
-      const areFull = e => e != null;
+      const areFull = (e) => e != null;
       if (rowArr.every(areFull) && this.areSameColor(rowArr)) {
         // console.log("Line COL");
         compleateLineMusic.play();
@@ -213,7 +213,7 @@ const Game = {
     }
   },
 
-  areSameColor: function(data) {
+  areSameColor: function (data) {
     const firstColor = data[0].color;
     let sameColors = true;
     for (let i = 0; i < data.length; i++) {
@@ -224,7 +224,7 @@ const Game = {
     return sameColors;
   },
 
-  removecompletedLines: function(arr, line) {
+  removecompletedLines: function (arr, line) {
     let lineToRemove = arr.indexOf(line);
     // console.log("Index line" + arr.indexOf(line));
     this.removedLineY = this.rowY[lineToRemove];
@@ -234,7 +234,7 @@ const Game = {
     console.log("Add line");
   },
 
-  moveAllBlockPos: function(arr) {
+  moveAllBlockPos: function (arr) {
     // * * * move all block when line is completed
     for (let row = 0; row < arr.length; row++) {
       for (let col = 0; col < arr[row].length; col++) {
@@ -251,7 +251,7 @@ const Game = {
 
   // SCORE
 
-  countLines: function() {
+  countLines: function () {
     this.lines = this.lines += 1;
     this.score = this.score += 300;
 
@@ -263,7 +263,7 @@ const Game = {
     console.log("update level");
   },
 
-  checkLevel: function() {
+  checkLevel: function () {
     if (this.score >= 300 && this.score < 600) {
       this.level = 2;
       console.log("LEVEL 2");
@@ -273,18 +273,18 @@ const Game = {
     }
   },
 
-  upDateScore: function() {
+  upDateScore: function () {
     document.getElementById("lines").innerHTML = this.lines;
     document.getElementById("score").innerHTML = this.score;
   },
 
-  upDateLevel: function() {
+  upDateLevel: function () {
     document.getElementById("level").innerHTML = this.level;
   },
 
   // GAME OVER / WIN
 
-  gameOver: function() {
+  gameOver: function () {
     this.stop();
     backgroundMusic.pause();
     gameOverMusic.play();
@@ -299,7 +299,7 @@ const Game = {
     this.ctx.restore();
   },
 
-  winner: function() {
+  winner: function () {
     this.stop();
     backgroundMusic.pause();
     winnerMusic.play();
@@ -315,7 +315,7 @@ const Game = {
     this.ctx.restore();
   },
 
-  flash: function() {
+  flash: function () {
     document.getElementById("lines").classList.add("flash");
     document.getElementById("score").classList.add("flash");
     document.getElementById("level").classList.add("flash");
@@ -323,14 +323,14 @@ const Game = {
 
   // BUTTONS
 
-  handleButtons: function() {
+  handleButtons: function () {
     this.pauseButton.classList.toggle("stop");
     this.pauseButton.innerHTML = this.pauseButton.classList.contains("stop")
       ? "PAUSE"
       : "CONTINUE";
   },
 
-  pause: function() {
+  pause: function () {
     this.handleButtons();
     backgroundMusic.pause();
     this.pauseButton.classList.add("btn-animated");
@@ -338,7 +338,7 @@ const Game = {
     console.log("PAUSE");
   },
 
-  continue: function() {
+  continue: function () {
     this.handleButtons();
     backgroundMusic.play();
     this.pauseButton.classList.remove("btn-animated");
@@ -346,7 +346,7 @@ const Game = {
     this.refresh();
     console.log("PLAY");
   },
-  stop: function() {
+  stop: function () {
     this.clear();
     this.playAnimation = false;
     if (this.requestId) {
@@ -354,5 +354,5 @@ const Game = {
       this.requestId = undefined;
       console.log("STOP");
     }
-  }
+  },
 };
