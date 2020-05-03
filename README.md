@@ -1,24 +1,82 @@
-# Color TETRIS
+# Color Tetris
 
-## Introduction
+### Description
 
-Created with javascript and css, the logic is based in the original TETRIS and works only with color cubes. 
+---
+
+Created with Vanilla Javascript, CSS and CANVAS, the logic is based in the original TETRIS and works only with color cubes.
 The goal is to get lines of the same color, earn points and LEVEL UP!
 
-### GAME
-The cubes descend from the top of the field, the user can move the pieces laterally, accelerate the descent and change it's color randomly.
+### Game
 
-### KEYS
+---
 
-- Left arrow > move the cube to the left
-- Right arrow > move the cube to the right
-- Down arrow > move the cube to the bottom
-- Space > change the color of the cube randomly
+The cubes descend from the top of the field, the user can move the pieces laterally, accelerate the descent and change their color randomly with the space bar. There are three levels and the speed is ascending as you change levels.
 
-### LEVELS
+### Keys
 
-- 1 line: 100 points
-- 300 points: 1 level
-- Total levels: 3
+---
 
-[Play!](https://piligar.github.io/color-tetris/)
+- **LEFT arrow** > move the cube to the left
+- **RIGHT arrow** > move the cube to the right
+- **DOWN arrow** > move the cube to the bottom
+- **SPACE bar** > change the color of the cube randomly
+
+### Levels and points
+
+---
+
+- **1 line**: 100 points
+- **300 points**: 1 level
+- **Total levels**: 3
+
+### Technologies
+
+---
+
+The game uses the following technologies:
+
+- **JAVASCRIPT**
+- **HTML**
+- **CSS**
+- **CANVAS**
+
+#### Where to play:
+
+[Have a look!](https://piligar.github.io/color-tetris/)
+
+### How to contribute
+
+---
+
+Any input or comment will be appreciated. It will help improve the game and its developer to continue learning.
+
+Any improvement will be included after a previous review through a **pull request**. An ordered and commented code is required.
+
+### Improvement lines
+
+---
+
+There are many **lines of improvement**, some of them are:
+
+- **Include more levels**
+- **Include diferent types of pieces**
+- **Include more players**
+
+### Code of conduct
+
+---
+
+The following link shows the [Code of conduct]().
+
+### Author
+
+---
+
+[Pilar García Campo](https://www.linkedin.com/in/pilargarciacampo/)
+
+### License
+
+---
+
+Here you can read the [License]().
