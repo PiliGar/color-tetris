@@ -1,5 +1,7 @@
 # Color Tetris
 
+![colorTetris](https://res.cloudinary.com/dqhtqecup/image/upload/v1588514967/color-tetris/Captura_de_pantalla_2020-05-03_a_las_14.08.30_klc0ow.png)
+
 ### Description
 
 ---
@@ -29,6 +31,8 @@ The cubes descend from the top of the field, the user can move the pieces latera
 - **1 line**: 100 points
 - **300 points**: 1 level
 - **Total levels**: 3
+
+![colorTetris2](https://res.cloudinary.com/dqhtqecup/image/upload/v1588514968/color-tetris/Captura_de_pantalla_2020-05-03_a_las_14.08.45_khe9wp.png)
 
 ### Technologies
 
@@ -67,7 +71,7 @@ There are many **lines of improvement**, some of them are:
 
 ---
 
-The following link shows the [Code of conduct]().
+The following link shows the [Code of conduct](https://github.com/PiliGar/color-tetris/blob/master/CODE_OF_CONDUCT.md).
 
 ### Author
 
@@ -79,4 +83,4 @@ The following link shows the [Code of conduct]().
 
 ---
 
-Here you can read the [License]().
+Here you can read the [License](https://github.com/PiliGar/color-tetris/blob/master/LICENSE.md).
