@@ -32,7 +32,7 @@ The cubes descend from the top of the field, the user can move the pieces latera
 - **300 points**: 1 level
 - **Total levels**: 3
 
-![colorTetris2](https://res.cloudinary.com/dqhtqecup/image/upload/v1588514968/color-tetris/Captura_de_pantalla_2020-05-03_a_las_14.08.45_khe9wp.png)
+![colorTetris2](https://res.cloudinary.com/dqhtqecup/image/upload/v1588515100/color-tetris/Captura_de_pantalla_2020-05-03_a_las_16.11.16_a4dsu4.png)
 
 ### Technologies
 
