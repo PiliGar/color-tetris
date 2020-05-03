@@ -8,10 +8,10 @@ class Block {
 
     this.blockColors = [
       "MediumSlateBlue",
-      // "HotPink",
-      // "MediumSeaGreen",
-      //"DeepSkyBlue",
-      "Tomato"
+      "HotPink",
+      "MediumSeaGreen",
+      "DeepSkyBlue",
+      "Tomato",
     ];
     this.color = this.blockColors[
       Math.floor(Math.random() * this.blockColors.length)
@@ -87,7 +87,7 @@ class Block {
   }
 
   setListeners() {
-    document.addEventListener("keydown", e => {
+    document.addEventListener("keydown", (e) => {
       switch (e.keyCode) {
         case 37:
           this.moveLeft();
